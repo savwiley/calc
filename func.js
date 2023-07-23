@@ -1,15 +1,4 @@
 //doms
-let one = document.querySelector(".one");
-const two = document.querySelector(".two");
-const three = document.querySelector(".three");
-const four = document.querySelector(".four");
-const five = document.querySelector(".five");
-const six = document.querySelector(".six");
-const seven = document.querySelector(".seven");
-const eight = document.querySelector(".eight");
-const nine = document.querySelector(".nine");
-const zero = document.querySelector(".zero");
-
 const decimal = document.querySelector(".decimal");
 const clear = document.querySelector(".clear");
 const back = document.querySelector(".back");
@@ -18,6 +7,7 @@ const addOP = document.querySelector(".add");
 const multiplyOP = document.querySelector(".multiply");
 const subtractOP = document.querySelector(".subtract");
 const divideOP = document.querySelector(".divide");
+const equals = document.querySelector(".equal");
 
 const windowDIV = document.querySelector("#window");
 
@@ -50,15 +40,18 @@ let windowNumbs;
 
 //main
 const operate = (first, op, second) => {
+  let firstN = Number(first);
+  let secondN = Number(second);
   if (op === "add") {
-    add(first, second);
+    windowNumbs = add(firstN, secondN);
   } else if (op === "subtract") {
-    subtract(first, second);
+    windowNumbs = subtract(firstN, secondN);
   } else if (op === "multiply") {
-    multiply(first, second);
+    windowNumbs = multiply(firstN, secondN);
   } else {
-    divide(first, second);
+    windowNumbs = divide(firstN, secondN);
   };
+  windowDIV.innerText = windowNumbs;
 };
 
 //add numbers to window
@@ -70,6 +63,15 @@ numbers.forEach(n => {
     windowDIV.innerText = windowNumbs;
   });
 });
+
+//add decimal
+decimal.addEventListener('click', () => {
+  !windowNumbs?
+    windowNumbs = "0." :
+    windowNumbs.includes(".") ? null :
+      windowNumbs += ".";
+  windowDIV.innerText = windowNumbs;
+})
 
 //clear
 clear.addEventListener('click', () => {
@@ -84,3 +86,40 @@ back.addEventListener('click', () => {
   windowNumbs = arr.join('');
   windowDIV.innerText = windowNumbs;
 });
+
+//WRITE IF WE'RE MAKING LONG EQUATIONS (3 + 2 - 4 = ?)
+
+//adding
+addOP.addEventListener('click', () => {
+  firstNumb = windowNumbs;
+  operator = "add";
+  windowNumbs = "";
+});
+
+//subtract
+subtractOP.addEventListener('click', () => {
+  firstNumb = windowNumbs;
+  operator = "subtract";
+  windowNumbs = "";
+});
+
+//multiply
+multiplyOP.addEventListener('click', () => {
+  firstNumb = windowNumbs;
+  operator = "multiply";
+  windowNumbs = "";
+});
+
+//divide
+divideOP.addEventListener('click', () => {
+  firstNumb = windowNumbs;
+  operator = "divide";
+  windowNumbs = "";
+});
+
+//equals
+equals.addEventListener('click', () => {
+  secondNumb = windowNumbs;
+  windowNumbs = "";
+  operate(firstNumb, operator, secondNumb);
+})
