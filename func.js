@@ -37,9 +37,9 @@ let operator;
 let secondNumb;
 let windowNumbs;
 
-
+// 12 + 7 - 5 * 3 = 42
 //main
-const operate = (first, op, second) => {
+const operate = (first, op, second, equal) => {
   let firstN = Number(first);
   let secondN = Number(second);
   if (op === "add") {
@@ -52,6 +52,11 @@ const operate = (first, op, second) => {
     windowNumbs = divide(firstN, secondN);
   };
   windowDIV.innerText = windowNumbs;
+  if (equal) {
+    firstNumb = "";
+    secondNumb = "";
+    operator = "";
+  }
 };
 
 //add numbers to window
@@ -91,9 +96,19 @@ back.addEventListener('click', () => {
 
 //adding
 addOP.addEventListener('click', () => {
-  firstNumb = windowNumbs;
   operator = "add";
-  windowNumbs = "";
+  if (!firstNumb) {
+    firstNumb = windowNumbs;
+    windowNumbs = "";
+  } else {
+    //secondNumb isn't taking correctly
+    secondNumb = windowNumbs;
+    windowNumbs = "";
+    operate(firstNumb, operator, secondNumb, false);
+    firstNumb = windowNumbs;
+  }
+  console.log(firstNumb);
+  console.log(secondNumb);
 });
 
 //subtract
@@ -121,5 +136,5 @@ divideOP.addEventListener('click', () => {
 equals.addEventListener('click', () => {
   secondNumb = windowNumbs;
   windowNumbs = "";
-  operate(firstNumb, operator, secondNumb);
+  operate(firstNumb, operator, secondNumb, true);
 })
