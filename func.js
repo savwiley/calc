@@ -30,16 +30,14 @@ const divide = (a, b) => {
   return a / b
 };
 
-
 //variables
 let firstNumb;
 let operator;
 let secondNumb;
 let windowNumbs;
 
-// 12 + 7 - 5 * 3 = 42
 //main
-const operate = (first, op, second, equal) => {
+const operate = (first, op, second) => {
   let firstN = Number(first);
   let secondN = Number(second);
   if (op === "add") {
@@ -52,11 +50,10 @@ const operate = (first, op, second, equal) => {
     windowNumbs = divide(firstN, secondN);
   };
   windowDIV.innerText = windowNumbs;
-  if (equal) {
-    firstNumb = "";
-    secondNumb = "";
-    operator = "";
-  }
+  firstNumb = Number(windowNumbs);
+  secondNumb = undefined;
+  operator = "";
+  windowNumbs = "";
 };
 
 //add numbers to window
@@ -80,6 +77,9 @@ decimal.addEventListener('click', () => {
 
 //clear
 clear.addEventListener('click', () => {
+  firstNumb = undefined;
+  secondNumb = undefined;
+  operator = "";
   windowNumbs = "";
   windowDIV.innerText = windowNumbs;
 });
@@ -92,49 +92,61 @@ back.addEventListener('click', () => {
   windowDIV.innerText = windowNumbs;
 });
 
-//WRITE IF WE'RE MAKING LONG EQUATIONS (3 + 2 - 4 = ?)
 
 //adding
 addOP.addEventListener('click', () => {
-  operator = "add";
   if (!firstNumb) {
-    firstNumb = windowNumbs;
+    operator = "add";
+    firstNumb = Number(windowNumbs);
     windowNumbs = "";
   } else {
-    //secondNumb isn't taking correctly
-    secondNumb = windowNumbs;
-    windowNumbs = "";
-    operate(firstNumb, operator, secondNumb, false);
-    firstNumb = windowNumbs;
+    secondNumb = Number(windowNumbs);
+    operate(firstNumb, operator, secondNumb);
+    operator = "add";
   }
-  console.log(firstNumb);
-  console.log(secondNumb);
 });
 
 //subtract
 subtractOP.addEventListener('click', () => {
-  firstNumb = windowNumbs;
-  operator = "subtract";
-  windowNumbs = "";
+  if (!firstNumb) {
+    operator = "subtract";
+    firstNumb = Number(windowNumbs);
+    windowNumbs = "";
+  } else {
+    secondNumb = Number(windowNumbs);
+    operate(firstNumb, operator, secondNumb);
+    operator = "subtract";
+  }
 });
 
 //multiply
 multiplyOP.addEventListener('click', () => {
-  firstNumb = windowNumbs;
-  operator = "multiply";
-  windowNumbs = "";
+  if (!firstNumb) {
+    operator = "multiply";
+    firstNumb = Number(windowNumbs);
+    windowNumbs = "";
+  } else {
+    secondNumb = Number(windowNumbs);
+    operate(firstNumb, operator, secondNumb);
+    operator = "multiply";
+  }
 });
 
 //divide
 divideOP.addEventListener('click', () => {
-  firstNumb = windowNumbs;
-  operator = "divide";
-  windowNumbs = "";
+  if (!firstNumb) {
+    operator = "divide";
+    firstNumb = Number(windowNumbs);
+    windowNumbs = "";
+  } else {
+    secondNumb = Number(windowNumbs);
+    operate(firstNumb, operator, secondNumb);
+    operator = "divide";
+  }
 });
 
 //equals
 equals.addEventListener('click', () => {
-  secondNumb = windowNumbs;
-  windowNumbs = "";
-  operate(firstNumb, operator, secondNumb, true);
+  secondNumb = Number(windowNumbs);
+  operate(firstNumb, operator, secondNumb);
 })
