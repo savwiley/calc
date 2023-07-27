@@ -42,14 +42,21 @@ const operate = (first, op, second) => {
   let secondN = Number(second);
   if (op === "add") {
     windowNumbs = add(firstN, secondN);
+    windowDIV.innerText = windowNumbs;
   } else if (op === "subtract") {
     windowNumbs = subtract(firstN, secondN);
+    windowDIV.innerText = windowNumbs;
   } else if (op === "multiply") {
     windowNumbs = multiply(firstN, secondN);
+    windowDIV.innerText = windowNumbs;
   } else {
-    windowNumbs = divide(firstN, secondN);
+    if (firstN === 0 || secondN === 0) {
+      windowDIV.innerText = "Nice Try";
+    } else {
+      windowNumbs = divide(firstN, secondN);
+      windowDIV.innerText = windowNumbs;
+    }
   };
-  windowDIV.innerText = windowNumbs;
   firstNumb = Number(windowNumbs);
   secondNumb = undefined;
   operator = "";
@@ -147,6 +154,10 @@ divideOP.addEventListener('click', () => {
 
 //equals
 equals.addEventListener('click', () => {
-  secondNumb = Number(windowNumbs);
-  operate(firstNumb, operator, secondNumb);
+  if (!operator) {
+    windowDIV.innerText = "ERROR";
+  } else {
+    secondNumb = Number(windowNumbs);
+    operate(firstNumb, operator, secondNumb);
+  }
 })
